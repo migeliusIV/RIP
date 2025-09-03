@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"strings"
 )
 
 type Repository struct {
@@ -39,4 +40,35 @@ func (r *Repository) GetOrders() ([]Order, error) {
 	}
 
 	return orders, nil
+}
+
+func (r *Repository) GetOrder(id int) (Order, error) {
+	// тут у вас будет логика получения нужной услуги, тоже наверное через цикл в первой лабе, и через запрос к БД начиная со второй
+	orders, err := r.GetOrders()
+	if err != nil {
+		return Order{}, err // тут у нас уже есть кастомная ошибка из нашего метода, поэтому мы можем просто вернуть ее
+	}
+
+	for _, order := range orders {
+		if order.ID == id {
+			return order, nil // если нашли, то просто возвращаем найденный заказ (услугу) без ошибок
+		}
+	}
+	return Order{}, fmt.Errorf("заказ не найден") // тут нужна кастомная ошибка, чтобы понимать на каком этапе возникла ошибка и что произошло
+}
+
+func (r *Repository) GetOrdersByTitle(title string) ([]Order, error) {
+	orders, err := r.GetOrders()
+	if err != nil {
+		return []Order{}, err
+	}
+
+	var result []Order
+	for _, order := range orders {
+		if strings.Contains(strings.ToLower(order.Title), strings.ToLower(title)) {
+			result = append(result, order)
+		}
+	}
+
+	return result, nil
 }
