@@ -1,0 +1,26 @@
+header img { /*задаем размер картинки*/
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+h1 {
+    color: #333;
+    font-size: 24px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
+
+h2 {
+    color: #333;
+    font-size: 18px;
+    margin-top: 20px;
+}
